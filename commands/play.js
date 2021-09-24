@@ -1,16 +1,14 @@
-const ytdl = require("ytdl-core");
+// Importing
+const ytdl = require("ytdl-core-discord");
 const ytSearch = require("yt-search");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const {
     joinVoiceChannel,
     createAudioPlayer,
-    NoSubscriberBehavior,
     createAudioResource,
     StreamType,
     AudioPlayerStatus,
 } = require("@discordjs/voice");
-const { guildId } = require("../config.json");
-const fs = require("fs");
 const { MessageEmbed } = require("discord.js");
 
 module.exports = {
@@ -53,7 +51,8 @@ module.exports = {
             .setAuthor("The Overseer Bot")
             .setDescription(video.title)
             .setThumbnail(video.thumbnail)
-            .setTimestamp();
+            .setTimestamp()
+            .setFooter("Bot made by Redekian (The most magas)");
 
         await interaction.reply({
             embeds: [embed],
