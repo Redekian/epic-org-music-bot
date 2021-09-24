@@ -1,0 +1,28 @@
+{
+    "name": "discord-bots",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "start": "nodemon index.ts",
+        "lint": "eslint index.ts"
+    },
+    "author": "",
+    "license": "ISC",
+    "dependencies": {
+        "@discordjs/builders": "^0.6.0",
+        "@discordjs/opus": "^0.6.0",
+        "@discordjs/rest": "^0.1.0-canary.0",
+        "@discordjs/voice": "^0.6.0",
+        "discord-api-types": "^0.23.1",
+        "discord.js": "^13.1.0",
+        "ffmpeg-static": "^4.4.0",
+        "libsodium-wrappers": "^0.7.9",
+        "nodemon": "^2.0.13",
+        "yt-search": "^2.10.1",
+        "ytdl-core": "^4.9.1"
+    },
+    "devDependencies": {
+        "@types/yt-search": "^2.3.2"
+    }
+}
