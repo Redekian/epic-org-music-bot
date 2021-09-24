@@ -1,5 +1,5 @@
 // Importing
-const ytdl = require("ytdl-core-discord");
+const ytdl = require("ytdl-core");
 const ytSearch = require("yt-search");
 const { SlashCommandBuilder } = require("@discordjs/builders");
 const {
@@ -35,16 +35,17 @@ module.exports = {
         const video = await videoFinder(songKeyword);
         const stream = ytdl(video.url, {
             filter: "audioonly",
+            highWaterMark: 1 << 25,
         });
         const resource = createAudioResource(stream, {
             inputType: StreamType.Arbitrary,
         });
+
         const player = createAudioPlayer();
 
         player.play(resource);
         connection.subscribe(player);
 
-        player.on(AudioPlayerStatus.Idle, () => connection.destroy());
         const embed = new MessageEmbed()
             .setTitle("Music Started Playing")
             .setURL(video.url)
