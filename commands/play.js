@@ -10,6 +10,8 @@ const {
     AudioPlayerStatus,
 } = require("@discordjs/voice");
 const { guildId } = require("../config.json");
+const fs = require("fs");
+const { MessageEmbed } = require("discord.js");
 
 module.exports = {
     data: new SlashCommandBuilder()
@@ -25,16 +27,14 @@ module.exports = {
         const songKeyword = interaction.options.getString("song");
         const videoFinder = async (query) => {
             const videoResult = await ytSearch(query);
-            console.log(videoResult);
             return videoResult.videos.length > 1 ? videoResult.videos[0] : null;
         };
         const connection = joinVoiceChannel({
-            channelId: "836217268685504552",
+            channelId: interaction.member.voice.channel.id,
             guildId: interaction.guild.id,
             adapterCreator: interaction.guild.voiceAdapterCreator,
         });
         const video = await videoFinder(songKeyword);
-        console.log(video);
         const stream = ytdl(video.url, {
             filter: "audioonly",
         });
@@ -47,8 +47,16 @@ module.exports = {
         connection.subscribe(player);
 
         player.on(AudioPlayerStatus.Idle, () => connection.destroy());
+        const embed = new MessageEmbed()
+            .setTitle("Music Started Playing")
+            .setURL(video.url)
+            .setAuthor("The Overseer Bot")
+            .setDescription(video.title)
+            .setThumbnail(video.thumbnail)
+            .setTimestamp();
+
         await interaction.reply({
-            content: video.title,
+            embeds: [embed],
         });
     },
 };
